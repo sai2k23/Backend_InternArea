@@ -1,5 +1,5 @@
 const mongoose=require("mongoose")
- const applicationShcema=new mongoose.Schema({
+ const applicationSchema=new mongoose.Schema({
     company:String,
     category:String,
     coverLetter:String,
@@ -15,4 +15,4 @@ const mongoose=require("mongoose")
         default:"pending"
     }
  })
- module.exports=mongoose.model("Application",applicationShcema)
+ module.exports=mongoose.model("Application",applicationSchema)
