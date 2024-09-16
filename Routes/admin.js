@@ -7,11 +7,12 @@ const adminPassword='admin'
 // For admin login
 router.post("/adminLogin", (req,res)=>{
     const {username,password}=req.body
-    if (username===adminUsername || password===adminPassword) {
-        res.send("Admin is here")
+    if (username === adminUsername || password===adminPassword) {
+        res.status(200).json({ message: "Admin login successful" });
     }
     else{
-        res.statusCode(401).send("Unauthrized")
+         // Invalid credentials
+         res.status(401).json({ message: "Invalid credentials" });
     }
-})
+});
 module.exports=router
