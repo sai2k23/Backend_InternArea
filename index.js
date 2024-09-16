@@ -2,9 +2,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { connect } = require("./db");
-const router = require("./Routes/index");
-const adminRouter = require("./Routes/admin"); 
+const { connect } = require("./db.js");
+const router = require("./Routes/index.js");
+const adminRouter = require("./Routes/admin.js"); 
 const app = express();
 const port = 5000;
 
