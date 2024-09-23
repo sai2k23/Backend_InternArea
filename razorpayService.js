@@ -1,6 +1,9 @@
-// razorpayService.js
 const Razorpay = require('razorpay');
 require('dotenv').config();
+
+// Log environment variables
+console.log('Razorpay Key ID:', process.env.RAZORPAY_KEY_ID);
+console.log('Razorpay Key Secret:', process.env.RAZORPAY_KEY_SECRET);
 
 // Initialize Razorpay instance with environment variables
 const razorpay = new Razorpay({
