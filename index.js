@@ -1,46 +1,55 @@
-// index.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { connect } = require("./db.js");
-const router = require("./Routes/index.js");
-const adminRouter = require("./Routes/admin.js"); 
-const app = express();
-const port = 5000;
+const applicationRoutes = require('./Routes/ApplicationRoute.js');
+const adminRoutes = require('./Routes/admin.js');
+const router=require("./Routes/index.js");
+require('dotenv').config(); // Make sure to load environment variables
 
-// Enable CORS for requests coming from localhost:3000
+const app = express();
+
+// PORT fallback if not provided in the .env file
+const PORT = process.env.PORT || 5000;
+
+// Enable CORS for requests from your frontend
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: 'http://localhost:3000', // Adjust this based on your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
 
-// Body parser middleware
+// Body parsers
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-app.use(express.json());
 
-// Set security headers
+// Security headers
 app.use((req, res, next) => {
     res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
     res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
     next();
 });
 
-// Test route
+// Health check route
 app.get("/", (req, res) => {
-    res.send("Hello, this is my backend");
+    res.send("Backend server is running");
 });
 
-// Main routes
-app.use("/api/application", router);
-app.use("/api/admin", adminRouter); // Mount the admin router
+app.use("/api",router)
+
+// Application routes
+app.use('/api/applications', applicationRoutes);
+
+// Admin routes
+app.use("/api/admin", adminRoutes);
+
 // Connect to the database
-connect();
-
-// Start the server
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+connect().then(() => {
+    // Start the server only after the database connection is successful
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}).catch((error) => {
+    console.error("Database connection failed:", error.message);
+    process.exit(1); // Exit the process if database connection fails
 });
-
-module.exports = router;
