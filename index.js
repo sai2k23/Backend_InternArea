@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 
 // Enable CORS for requests from your frontend
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://internshipsarea.netlify.app'], // Adjust this based on your frontend URL
+    origin: ['http://localhost:3000', 'https://internshalatwin.netlify.app/'], // Adjust this based on your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
